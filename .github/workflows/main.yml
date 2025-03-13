@@ -1,0 +1,28 @@
+name: GitHub Actions Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      Env:
+        type: environment
+        required: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo 'The event that triggered this workflow was ${{ github.event_name }}'
+          echo 'The branch this workflow is running against is ${{ github.ref }}'
+      - uses: actions/checkout@v4
+      - run: tree
+  Prod:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.Env == 'Production'
+    needs: [ Build ]
+    environment:
+      name: TheCoolEnvironment
+      url: https://writeabout.net
+    steps:
+      - run: |
+          echo 'Step 1 deploying...'
