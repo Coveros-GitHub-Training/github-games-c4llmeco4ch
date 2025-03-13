@@ -18,7 +18,7 @@ jobs:
       - run: tree
   Prod:
     runs-on: ubuntu-latest
-    if: github.event.inputs.Env == 'Production'
+    if: github.event.inputs.Env == 'TheCoolEnvironment'
     needs: [ Build ]
     environment:
       name: TheCoolEnvironment
